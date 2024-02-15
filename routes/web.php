@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', static function () {
     return view('welcome');
 });
+Route::get('/hello',static function (Request $request) {
+    response()
+        ->json(["message" => 'First API part'])
+        ->send();
+});
+
+Route::get('hello/{id}', static fn($id) => ddd())
+ ->where('id', '\d+');
