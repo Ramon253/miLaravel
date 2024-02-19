@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Request;
 */
 
 Route::get('/', static function () {
-    return view('welcome');
+    return view('welcome', [
+        'Pene' => 'El mas grande del mundo'
+    ]);
 });
-Route::get('/hello',static function (Request $request) {
+Route::get('/hello/',static function (Request $request) {
     response()
         ->json(["message" => 'First API part'])
         ->send();
@@ -24,3 +26,4 @@ Route::get('/hello',static function (Request $request) {
 
 Route::get('hello/{id}', static fn($id) => ddd())
  ->where('id', '\d+');
+
