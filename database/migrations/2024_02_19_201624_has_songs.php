@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('has_songs', static function (Blueprint $table) {
             $table->unsignedBigInteger('id_vinyl');
             $table->unsignedBigInteger('id_song');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
 
             $table->foreign('id_vinyl')
                 ->references('id')

@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Route;
+use App\Models\Vinyls;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,14 +16,16 @@ use Illuminate\Support\Facades\Request;
 */
 
 Route::get('/', static function () {
-    return view('welcome', [
-        'Pene' => 'El mas grande del mundo'
-    ]);
+   $vinyls  = Vinyls::all();
+   return view('index',[
+       'vinyls' => $vinyls
+   ]);
 });
 Route::get('/hello/',static function (Request $request) {
-    response()
-        ->json(["message" => 'First API part'])
-        ->send();
+    response()->view('welcome')->send();
+});
+Route::post('/hello', function () {
+    dd(request());
 });
 
 Route::get('hello/{id}', static fn($id) => ddd())

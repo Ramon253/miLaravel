@@ -3,6 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Addresses;
+use App\Models\Has_songs;
+use App\Models\Songs;
+use App\Models\Users;
+use App\Models\Vinyls;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         \App\Models\User::factory(3000)->create();
+        Users::factory(10)->create();
 
-         \App\Models\User::factory()->create([
-             'name' => 'Test User',
+        Users::factory()->create([
+             'name' => 'Test Users',
              'email' => 'test@example.com',
          ]);
+
+        Addresses::factory(15)->create();
+        Songs::factory(50)->create();
+        Vinyls::factory(25)->create();
+
+        foreach (Vinyls::all() as $vinyl) {
+            Has_songs::create([
+                'id_vinyl' => $vinyl->id,
+                'id_song' => fake()->randomElement(Songs::all())['id']]);
+        }
+
     }
 }

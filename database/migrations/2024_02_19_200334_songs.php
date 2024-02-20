@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('compositor');
             $table->string('genre');
             $table->integer('duration');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
         });
     }
 

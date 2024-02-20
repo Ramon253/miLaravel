@@ -15,8 +15,9 @@ return new class extends Migration {
             $table->integer('postal_code');
             $table->string('street');
             $table->string('number');
+            $table->dateTime('created_at');
+            $table->dateTime('updated_at');
             $table->foreignId('id_user')
-                ->unique()
                 ->constrained(table: 'users', indexName: 'id')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
