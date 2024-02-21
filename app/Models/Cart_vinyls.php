@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Vinyls;
+use App\Models\Vinyl;
 use Illuminate\Support\Facades\DB;
 
 class Cart_vinyls extends Model

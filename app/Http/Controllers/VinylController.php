@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vinyls;
+use App\Models\Vinyl;
 use Illuminate\Http\Request;
 
 class VinylController extends Controller
@@ -34,17 +34,18 @@ class VinylController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Vinyl $vinyl)
     {
+
         return view('vinyl.vinyl',[
-            'vinyl' => Vinyls::find($id)
+            'vinyl' => $vinyl
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Vinyls $vinyls)
+    public function edit(Vinyl $vinyls)
     {
         //
     }
@@ -52,7 +53,7 @@ class VinylController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Vinyls $vinyls)
+    public function update(Request $request, Vinyl $vinyls)
     {
         //
     }
@@ -60,7 +61,7 @@ class VinylController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Vinyls $vinyls)
+    public function destroy(Vinyl $vinyls)
     {
         //
     }

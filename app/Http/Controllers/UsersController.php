@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use function PHPUnit\Framework\isNan;
 
 class UsersController extends Controller
 {
@@ -17,7 +19,52 @@ class UsersController extends Controller
         return view('user.register');
     }
 
-    public function login(Request $request){
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'You have been logged out!');
+    }
+
+    public function login(Request $request)
+    {
+        $identifier = self::getIdentifier($request);
+
+        $formData = $request->validate([
+            $identifier['field'] => $identifier['validation'],
+            'password' => 'required'
+        ]);
+
+        if (auth()->attempt($formData)) {
+            $user = Users::where($identifier['field'], $identifier['value'])->first();
+            if (is_null( $user->email_verified_at)){
+                self::verifyUser($user);
+            }
+            self::verifyUser();
+            $request->session()->regenerate();
+            return redirect('/')->with('message', 'Logged in successfully');
+        }
+        dd($formData);
+    }
+
+    private static function verifyUser($user): void
+    {
+    }
+
+    private static function getIdentifier(Request $request)
+    {
+        $field = 'name';
+        $validation = ['required'];
+        $value = $request->name;
+        if (isset($request->email)) {
+
+            $field = 'email';
+            $validation[] = 'email';
+            $value = $request->email;
+        }
+        return ['field' => $field, 'validation' => $validation, 'value' => $value];
     }
 
     /**
@@ -30,10 +77,10 @@ class UsersController extends Controller
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => 'required|confirmed|min:6'
         ]);
-        $formFields['password'] = password_hash($formFields['password'], PASSWORD_DEFAULT );
+        $formFields['password'] = password_hash($formFields['password'], PASSWORD_DEFAULT);
         $user = Users::create($formFields);
 
-        return redirect('/')->with('message' , 'usuario creado con exito');
+        return redirect('/login')->with('message', 'usuario creado con exito');
     }
 
     /**

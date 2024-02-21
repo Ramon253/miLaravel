@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Songs;
-use App\Models\Vinyls;
+use App\Models\Vinyl;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class VinylsFactory extends Factory
+class VinylFactory extends Factory
 {
     /**
      * Define the model's default state.

@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\UsersController;
-use App\Models\Vinyls;
+use App\Models\Vinyl;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VinylController;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,15 +17,19 @@ use App\Http\Controllers\VinylController;
 */
 
 Route::get('/', static function () {
-   $vinyls  = Vinyls::all();
+   $vinyls  = Vinyl::all();
    return view('index',[
        'vinyls' => $vinyls
    ]);
 });
+Route::post('/logout', [UsersController::class, 'logout']);
 
-Route::get('/vinyls/{id}', function (Vinyls $vinyl, $id){
 
-})->where('id', '\d+');
+Route::get('/login', static fn() =>view('user.login'));
+Route::post('/login', [UsersController::class, 'login']);
+
+
+
 Route::resources([
     'user' => UsersController::class,
     'vinyl' => VinylController::class
