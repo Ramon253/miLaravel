@@ -1,11 +1,11 @@
 @props(['vinyl'])
-<x-card>
-    <div class="flex">
-        <img class="hidden w-48 mr-6 md:block"
-             src="{{asset('/images/no-image.png')}}" alt=""/>
+<x-card class="w-3/4">
+    <div class="flex w-full">
+        <img class="hidden w-48 mr-6 md:block rounded"
+             src="{{$vinyl->imageStyle ? asset($vinyl->imageStyle) : asset('/images/no-image.jpg')}}" alt=""/>
         <div>
             <h3 class="text-2xl">
-                <a href="/vinyls/{{$vinyl->id}}">{{$vinyl->name}}</a>
+                <a href="/vinyl/{{$vinyl->id}}">{{$vinyl->name}}</a>
             </h3>
             <div class="text-xl font-bold mb-4">Stock : {{$vinyl->stock}}</div>
             <div class="text-xl font-bold mb-4">Price : {{$vinyl->price}}</div>

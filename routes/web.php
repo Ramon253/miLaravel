@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 use App\Models\Vinyls;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VinylController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +22,13 @@ Route::get('/', static function () {
        'vinyls' => $vinyls
    ]);
 });
-Route::get('/hello/',static function (Request $request) {
-    response()->view('welcome')->send();
-});
-Route::post('/hello', function () {
-    dd(request());
-});
 
-Route::get('hello/{id}', static fn($id) => ddd())
- ->where('id', '\d+');
+Route::get('/vinyls/{id}', function (Vinyls $vinyl, $id){
+
+})->where('id', '\d+');
+Route::resources([
+    'user' => UsersController::class,
+    'vinyl' => VinylController::class
+]);
+
 

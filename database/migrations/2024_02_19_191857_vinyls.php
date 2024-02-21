@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('name')->unique();
             $table->integer('stock')->unsigned();
             $table->integer('price')->unsigned();
-            $table->string('imageStyle');
+            $table->string('imageStyle')->nullable();
             $table->integer('maxDuration');
             $table->integer('duration');
             $table->dateTime('created_at');

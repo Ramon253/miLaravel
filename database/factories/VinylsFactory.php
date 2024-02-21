@@ -24,7 +24,7 @@ class VinylsFactory extends Factory
             'name' => fake()->unique()->name(),
             'stock' => fake()->numberBetween(0,1000),
             'price' => fake()->numberBetween(1, 150),
-            'imageStyle' => fake()->image(),
+            'imageStyle' => null,
             'maxDuration' => 44,
             'duration' => fake()->numberBetween(1,44)
         ];
