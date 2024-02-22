@@ -19,6 +19,7 @@ class UsersController extends Controller
         return view('user.register');
     }
 
+
     public function logout(Request $request)
     {
         auth()->logout();
@@ -42,7 +43,7 @@ class UsersController extends Controller
             if (is_null( $user->email_verified_at)){
                 self::verifyUser($user);
             }
-            self::verifyUser();
+            self::verifyUser($user);
             $request->session()->regenerate();
             return redirect('/')->with('message', 'Logged in successfully');
         }
@@ -51,6 +52,7 @@ class UsersController extends Controller
 
     private static function verifyUser($user): void
     {
+
     }
 
     private static function getIdentifier(Request $request)

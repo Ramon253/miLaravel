@@ -28,7 +28,9 @@ Route::post('/logout', [UsersController::class, 'logout']);
 Route::get('/login', static fn() =>view('user.login'));
 Route::post('/login', [UsersController::class, 'login']);
 
-
+Route::get('/send', function (){
+    \Illuminate\Support\Facades\Mail::to('ramontxugallardo@gmail.com')->send(new \App\Mail\auth());
+});
 
 Route::resources([
     'user' => UsersController::class,
