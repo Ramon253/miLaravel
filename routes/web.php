@@ -22,14 +22,18 @@ Route::get('/', static function () {
        'vinyls' => $vinyls
    ]);
 });
-Route::post('/logout', [UsersController::class, 'logout']);
+
+Route::view('/login', 'user.login');
 
 
-Route::get('/login', static fn() =>view('user.login'));
-Route::post('/login', [UsersController::class, 'login']);
-
-Route::get('/send', function (){
-    \Illuminate\Support\Facades\Mail::to('ramontxugallardo@gmail.com')->send(new \App\Mail\auth());
+Route::controller(UsersController::class)->group(function (){
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout');
+    Route::post('/verify', 'verify');
+    Route::get('/verify', 'getVerify');
+});
+Route::get('/session', function (){
+    dd(session('verificationCode'));
 });
 
 Route::resources([

@@ -39,7 +39,8 @@ class auth extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'Auth',
+            view: 'mail.verification_code',
+            with: session('verificationCode')
         );
     }
 

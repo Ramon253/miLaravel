@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
-use function PHPUnit\Framework\isNan;
 
 class UsersController extends Controller
 {
@@ -41,33 +39,29 @@ class UsersController extends Controller
         if (auth()->attempt($formData)) {
             $user = Users::where($identifier['field'], $identifier['value'])->first();
             if (is_null( $user->email_verified_at)){
-                self::verifyUser($user);
+                return self::sendMail($user);
             }
-            self::verifyUser($user);
             $request->session()->regenerate();
             return redirect('/')->with('message', 'Logged in successfully');
         }
-        dd($formData);
+        return back()->with('message' , 'Auth failed');
     }
 
-    private static function verifyUser($user): void
+    private static function sendMail($user)
     {
-
+        session(['verificationCode' => rand(100000, 999999)]);
+        session(['user' => $user]);
+        return redirect('/verify');
     }
 
-    private static function getIdentifier(Request $request)
+    public function getVerify()
     {
-        $field = 'name';
-        $validation = ['required'];
-        $value = $request->name;
-        if (isset($request->email)) {
-
-            $field = 'email';
-            $validation[] = 'email';
-            $value = $request->email;
+        if (session()->missing('verificationCode')) {
+            return redirect('/')->with('message', 'No has figura ningun intento de verificacion');
         }
-        return ['field' => $field, 'validation' => $validation, 'value' => $value];
+        return view('user.verify');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -115,5 +109,18 @@ class UsersController extends Controller
     public function destroy(Users $users)
     {
         //
+    }
+    private static function getIdentifier(Request $request)
+    {
+        $field = 'name';
+        $validation = ['required'];
+        $value = $request->name;
+        if (isset($request->email)) {
+
+            $field = 'email';
+            $validation[] = 'email';
+            $value = $request->email;
+        }
+        return ['field' => $field, 'validation' => $validation, 'value' => $value];
     }
 }
