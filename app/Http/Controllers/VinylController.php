@@ -36,9 +36,10 @@ class VinylController extends Controller
      */
     public function show(Vinyl $vinyl)
     {
-
+        $songs = $vinyl->getSongs();
         return view('vinyl.vinyl',[
-            'vinyl' => $vinyl
+            'vinyl' => $vinyl,
+            'songs' => $songs
         ]);
     }
 

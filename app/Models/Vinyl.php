@@ -12,13 +12,13 @@ class Vinyl extends Model
 
     protected $fillable = ["name", "stock", "price", "style", "duration", "max_duration"];
 
-    public static function getSongs($id_vinyl)
+    public function getSongs()
     {
         return DB::table('songs')
             ->select('songs.*')
             ->join('has_songs', 'songs.id', '=', 'has_songs.id_song')
             ->join('vinyls', 'has_songs.id_vinyl', '=', 'vinyls.id')
-            ->where('vinyls.id', $id_vinyl)
+            ->where('vinyls.id', $this->id)
             ->get();
     }
 }

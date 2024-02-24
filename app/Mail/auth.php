@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Users;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -17,10 +18,9 @@ class auth extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public int $verificationCode
+    ){}
 
     /**
      * Get the message envelope.
@@ -40,7 +40,7 @@ class auth extends Mailable
     {
         return new Content(
             view: 'mail.verification_code',
-            with: session('verificationCode')
+            with: ['code' => $this->verificationCode]
         );
     }
 

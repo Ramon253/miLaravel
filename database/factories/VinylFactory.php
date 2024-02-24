@@ -26,7 +26,8 @@ class VinylFactory extends Factory
             'price' => fake()->numberBetween(1, 150),
             'imageStyle' => null,
             'maxDuration' => 44,
-            'duration' => fake()->numberBetween(1,44)
+            'duration' => fake()->numberBetween(1,44),
+            'description' => fake()->text
         ];
     }
 

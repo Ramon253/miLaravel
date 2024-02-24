@@ -1,10 +1,10 @@
 <x-layout>
     <x-card>
-        <form action="/verify" method="post">
+        <form action="/verify" method="POST" class="flex flex-col space-y-10">
             @csrf
-            <div class="flex-col space-y-10">
+            <div class="flex flex-col space-y-10">
                 <label for="code">We sent you an email to verify the login, if you dont see it it may be in your spam folder</label>
-                <input type="number" maxlength="6" minlength="6" id="code" name="code">
+                <input class="w-10 border-black border-r-black" type="number" maxlength="6" minlength="6" id="code" name="code">
             </div>
             <x-submit_button>
                 Send

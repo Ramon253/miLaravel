@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\auth;
 use App\Models\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Random\RandomException;
+
 
 class UsersController extends Controller
 {
@@ -18,15 +22,9 @@ class UsersController extends Controller
     }
 
 
-    public function logout(Request $request)
-    {
-        auth()->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/')->with('message', 'You have been logged out!');
-    }
-
+    /**
+     * @throws RandomException
+     */
     public function login(Request $request)
     {
         $identifier = self::getIdentifier($request);
@@ -38,20 +36,58 @@ class UsersController extends Controller
 
         if (auth()->attempt($formData)) {
             $user = Users::where($identifier['field'], $identifier['value'])->first();
-            if (is_null( $user->email_verified_at)){
-                return self::sendMail($user);
+            if (is_null($user->email_verified_at)) {
+                auth()->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                self::sendMail($user);
+                return redirect('/verify');
             }
             $request->session()->regenerate();
             return redirect('/')->with('message', 'Logged in successfully');
         }
-        return back()->with('message' , 'Auth failed');
+        return back()->with('message', 'Auth failed');
     }
 
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'You have been logged out!');
+    }
+
+    public function verify(Request $request)
+    {
+        $code = $request->validate(['code' => 'required'])['code'];
+        if (session()->missing('verificationCode')) {
+            return redirect('/')->with('message', 'There it is no login attempt in this session');
+        }
+        if (session('verificationCode') !== (int) $code) {
+            return back()->with('message', 'Incorrect code');
+        }
+        auth()->login(session('user'));
+        $request->session()->regenerate();
+
+        $user = session('user');
+        $user->email_verified_at = now();
+        $user->save();
+
+        return redirect('/')->with('message', 'Auth passes successfully');
+    }
+
+    /**
+     * @throws RandomException
+     */
     private static function sendMail($user)
     {
-        session(['verificationCode' => rand(100000, 999999)]);
+        $code = random_int(100000, 999999);
+        session(['verificationCode' => $code]);
         session(['user' => $user]);
-        return redirect('/verify');
+
+        Mail::to($user->email)->send(new auth($code));
     }
 
     public function getVerify()
@@ -110,6 +146,7 @@ class UsersController extends Controller
     {
         //
     }
+
     private static function getIdentifier(Request $request)
     {
         $field = 'name';

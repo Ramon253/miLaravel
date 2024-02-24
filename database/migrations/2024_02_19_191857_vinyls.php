@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('imageStyle')->nullable();
             $table->integer('maxDuration');
             $table->integer('duration');
+            $table->longText('description');
             $table->dateTime('created_at');
             $table->dateTime('updated_at');
         });
