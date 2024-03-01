@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\DB;
 class Cart_vinyls extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'id_user',
         'id_vinyl',
         'quantity'
     ];
 
-    public static function getCartVinyls($id_user){
-        DB::table('vinyls')
-            ->select('vinyls.*')
-            ->join('cart_vinyls' , 'vinyls.id', '=', 'cart_vinyl.id_vinyl')
-            ->join('users' , 'users.id', '=', 'cart_vinyl.id_user')
-            ->where('user.id' , $id_user);
+    public static function getCartVinyls($id_user)
+    {
+        return  DB::table('vinyls')
+            ->select('vinyls.*', 'quantity')
+            ->join('cart_vinyls', 'vinyls.id', '=', 'cart_vinyls.id_vinyl')
+            ->join('users', 'users.id', '=', 'cart_vinyls.id_user')
+            ->where('users.id', $id_user)
+            ->get();
     }
 }

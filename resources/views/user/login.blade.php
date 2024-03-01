@@ -45,7 +45,7 @@
             <div>
                 <p>
                     Don't have an account?
-                    <a href="/register" class="text-laravel">Register</a>
+                    <a href="user/create" class="text-laravel">Register</a>
                 </p>
             </div>
         </form>

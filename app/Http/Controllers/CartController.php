@@ -14,7 +14,11 @@ class CartController extends Controller
      */
     public function index()
     {
+        $vinyls = Cart_vinyls::getCartVinyls(Auth::id());
 
+        return view('user.cart', [
+            'vinyls' => $vinyls
+        ]);
     }
 
     /**
@@ -36,17 +40,10 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cart_vinyls $cart_vinyls)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cart_vinyls $cart_vinyls)
+    public function edit(Request $request)
     {
-        //
+
     }
 
     /**

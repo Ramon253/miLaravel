@@ -47,7 +47,8 @@ class UsersController extends Controller
             $request->session()->regenerate();
             return redirect('/')->with('message', 'Logged in successfully');
         }
-        return back()->with('message', 'Auth failed');
+
+        return back()->withErrors(['password' =>'Invalid username/email or password']);
     }
 
     public function logout(Request $request)

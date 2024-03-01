@@ -23,6 +23,7 @@ Route::get('/', static function () {
     return view('index', [
         'vinyls' => $vinyls
     ]);
+
 });
 
 Route::view('/login', 'user.login');
@@ -34,8 +35,9 @@ Route::controller(UsersController::class)->group(function () {
     Route::get('/verify', 'getVerify');
 });
 
-Route::controller(CartController::class)->group(function () {
-    Route::post('/cart/{id_vinyl}', 'store')->middleware('auth')->whereNumber('id_vinyl');
+Route::controller(CartController::class)->middleware('auth')->group(function () {
+    Route::get('/cart', 'index');
+    Route::post('/cart/{id_vinyl}', 'store')->whereNumber('id_vinyl');
 });
 
 Route::resources([
@@ -43,4 +45,4 @@ Route::resources([
     'vinyl' => VinylController::class
 ]);
 
-
+Route::get('test',);

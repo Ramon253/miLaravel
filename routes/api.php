@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/hello', function (){
-    return response()->json(["message" => 'perfe']);
+Route::post('/hello', function (Request $request){
+    return response()->header(["set-cookie" => 'perfe']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
