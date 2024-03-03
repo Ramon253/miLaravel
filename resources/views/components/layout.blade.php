@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
           integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     @vite('resources/css/app.css')
     @vite(['resources/js/app.js'])
     <title> VOST | Vinyls OST</title>
@@ -69,10 +69,11 @@
                 @endauth
             </ul>
     </div>
+    {{--Navbar--}}
     <div class="w-full flex justify-center">
         <ul class="flex bg-slate-800 text-white shadow-2xl  items-center rounded h-10 w-96 justify-evenly space-x-10 justify-self-center self-end">
             <li class="flex rounded items-center h-2/3 p-2 {{$hover}}"><a href="">Tienda</a></li>
-            <li class="flex rounded items-center h-2/3 p-2 {{$hover}}"><a href="/user/cart">Carrito</a></li>
+            <li class="flex rounded items-center h-2/3 p-2 {{$hover}}"><a href="/cart">Carrito</a></li>
             <li class="flex rounded items-center h-2/3 p-2 {{$hover}}"><a href="">Perfil</a></li>
         </ul>
     </div>

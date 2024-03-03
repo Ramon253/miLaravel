@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart_vinyls;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,7 @@ class CartController extends Controller
         $vinyls = Cart_vinyls::getCartVinyls(Auth::id());
 
         return view('user.cart', [
-            'vinyls' => $vinyls
+            'vinyls' => $vinyls,
         ]);
     }
 
@@ -40,6 +41,7 @@ class CartController extends Controller
     /**
      * Display the specified resource.
      */
+
 
     public function edit(Request $request)
     {

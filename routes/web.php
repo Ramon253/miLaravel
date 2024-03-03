@@ -38,6 +38,7 @@ Route::controller(UsersController::class)->group(function () {
 Route::controller(CartController::class)->middleware('auth')->group(function () {
     Route::get('/cart', 'index');
     Route::post('/cart/{id_vinyl}', 'store')->whereNumber('id_vinyl');
+    Route::get('/cart/buy', 'buy');
 });
 
 Route::resources([

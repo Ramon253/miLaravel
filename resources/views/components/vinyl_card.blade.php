@@ -1,7 +1,7 @@
 @props(['vinyl'])
-<x-card class="w-2/5 justify-self-center first:ml-5 mt-5">
+<x-card class="w-2/5 justify-self-center rounded-xl first:ml-5 mt-5 bg-slate-900  text-gray-100">
     <div class="flex w-full">
-        <img class="hidden w-48 mr-6 md:block rounded"
+        <img class="hidden w-48 mr-6 md:block rounded border-gray-700 border-2"
              src="{{$vinyl->imageStyle ? asset($vinyl->imageStyle) : asset('/images/no-image.jpg')}}" alt=""/>
         <div class="flex flex-col space-y-4">
             <h3 class="text-2xl">
