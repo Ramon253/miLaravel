@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Vinyl;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart_vinyls;
 use App\Http\Controllers\Controller;
@@ -26,13 +27,15 @@ class CartController extends Controller
      * Show the form for creating a new resource.
      */
 
-    public function store(Request $request, string $id_vinyl)
+    public function store(Request $request, Vinyl $vinyl)
     {
         $quantity = $request->validate(['quantity' => 'required']);
-
+        $cart = Cart_vinyls::query()->where('id_vinyl', $vinyl->id)->get()[0];
+        if ($cart->update(['quantity' => $cart->quantity + $quantity['quantity']]))
+            return back()->with('addToCart', 'In cart');
         $result = Cart_vinyls::create([
             'id_user' => Auth::id(),
-            'id_vinyl' => $id_vinyl,
+            'id_vinyl' => $vinyl->id,
             'quantity' => $quantity['quantity']
         ]);
         return back()->with('addToCart', 'In cart');

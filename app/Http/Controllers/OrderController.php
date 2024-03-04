@@ -21,12 +21,13 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function startPurchase(Request $request)
+    public function create(Request $request)
     {
         $formData = $request->validate([
             'vinyls' => 'required',
-            'quantity' => 'required'
         ]);
+        $vinyls = $formData['vinyls'];
+        dd($vinyls);
         $addresses = Address::all()->where('id_user', Auth::id());
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UsersController;
 use App\Models\Vinyl;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +38,7 @@ Route::controller(UsersController::class)->group(function () {
 
 Route::controller(CartController::class)->middleware('auth')->group(function () {
     Route::get('/cart', 'index');
-    Route::post('/cart/{id_vinyl}', 'store')->whereNumber('id_vinyl');
+    Route::post('/cart/{vinyl}', 'store');
     Route::get('/cart/buy', 'buy');
 });
 
@@ -46,4 +47,8 @@ Route::resources([
     'vinyl' => VinylController::class
 ]);
 
-Route::get('test',);
+Route::controller(OrderController::class)->middleware('auth')->group(function (){
+    Route::post('/order/create', 'create');
+    Route::post('/order', 'store');
+    Route::get('/order', 'index');
+});

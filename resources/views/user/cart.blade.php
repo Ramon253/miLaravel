@@ -17,7 +17,7 @@
         <form action="/vinyl/buy" method="post"
             @foreach($vinyls as $vinyl)
                 <input type="hidden" name="id_vinyls[]" value="{{$vinyl->id}}">
-                <input type="hidden" name="quantity[]" value="{{$vinyl->quantity}}">
+                <input type="hidden" name="quantity[{{$vinyl->id}}]" value="{{$vinyl->quantity}}">
             @endforeach
 
             <button type="submit"
